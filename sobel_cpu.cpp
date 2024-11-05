@@ -53,14 +53,9 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
    {
       for(int y = 0; y < 3; y++)
       {
-         int ix = i + x - 1;
-         int jy = j + y - 1;
-
-         if(ix < 0) ix = 0;
-         if(ix >= nrows) ix = nrows - 1;
-         if(jy < 0) jy = 0;
-         if(jy >= ncols) jy = ncols - 1;
-         
+         // if we reached an edge
+         if(i == 0 || i == nrows - 1 || j == 0 || j == ncols - 1)
+            return 0;  
          calculatedGx += s[(i + x - 1) * ncols + (j + y - 1)] * gx[x * 3 + y];
          calculatedGy += s[(i + x - 1) * ncols + (j + y - 1)] * gy[x * 3 + y];
       }
