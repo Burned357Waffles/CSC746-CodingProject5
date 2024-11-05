@@ -1,0 +1,5 @@
+/pscratch/sd/b/bwat746/CSC746-CodingProject5/build/CMakeFiles/edit_cache.dir
+/pscratch/sd/b/bwat746/CSC746-CodingProject5/build/CMakeFiles/rebuild_cache.dir
+/pscratch/sd/b/bwat746/CSC746-CodingProject5/build/CMakeFiles/sobel_gpu.dir
+/pscratch/sd/b/bwat746/CSC746-CodingProject5/build/CMakeFiles/sobel_cpu_omp_offload.dir
+/pscratch/sd/b/bwat746/CSC746-CodingProject5/build/CMakeFiles/sobel_cpu.dir

@@ -1,0 +1,1 @@
+/usr/bin/g++ CMakeFiles/sobel_gpu.dir/sobel_gpu.cu.o -o sobel_gpu  -lcudadevrt -lcudart_static -lrt -lpthread -ldl  -L"/opt/nvidia/hpc_sdk/Linux_x86_64/23.9/cuda/12.2/lib64" -L"/opt/nvidia/hpc_sdk/Linux_x86_64/23.9/cuda/12.2/targets/x86_64-linux/lib/stubs" -L"/opt/nvidia/hpc_sdk/Linux_x86_64/23.9/cuda/12.2/targets/x86_64-linux/lib"

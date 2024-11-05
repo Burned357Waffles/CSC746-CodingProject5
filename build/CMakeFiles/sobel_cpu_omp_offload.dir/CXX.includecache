@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/pscratch/sd/b/bwat746/CSC746-CodingProject5/sobel_cpu_omp_offload.cpp
+iostream
+-
+vector
+-
+chrono
+-
+unistd.h
+-
+string.h
+-
+math.h
+-
+omp.h
+-
+
