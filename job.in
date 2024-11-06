@@ -33,6 +33,7 @@ for t in 1 2 4 8 16
    export OMP_NUM_THREADS=$t
    echo "OMP_NUM_THREASDS = " $OMP_NUM_THREADS
    ./job-@BENCHMARK@
+   echo "Finished job-@BENCHMARK@ with $OMP_NUM_THREADS threads"
 #   srun -n 1  ./benchmark-@BENCHMARK@  # fall 2023, don't use srun to launch non-MPI jobs
 # don't use --cpu-bind=threads on KNL when P % 272 != 0
 # see https://docs.nersc.gov/jobs/affinity/#slurm-cpu-bind-flag
