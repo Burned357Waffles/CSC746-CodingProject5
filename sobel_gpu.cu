@@ -194,7 +194,7 @@ main (int ac, char *av[])
    int nBlocks = 1;
    int nThreadsPerBlock = 256;
 
-   if (ac != 2)
+   if (ac != 3)
    {
       printf("Using default GPU configuration: 1 block, 256 threads per block\n");
       printf("Usage: <output-filename> <nBlocks> <nThreadsPerBlock>\n");
