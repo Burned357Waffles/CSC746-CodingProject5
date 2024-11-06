@@ -49,20 +49,6 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
    // ADD CODE HERE: add your code here for computing the sobel stencil computation at location (i,j)
    // of input s, returning a float
 
-   /*
-         int ix = i + x - 1;
-         int jy = j + y - 1;
-
-         if(ix < 0) ix = 0;
-         if(ix >= nrows) ix = nrows - 1;
-         if(jy < 0) jy = 0;
-         if(jy >= ncols) jy = ncols - 1;
-
-         calculatedGx += s[ix * ncols + jy] * gx[x * 3 + y];
-         calculatedGy += s[ix * ncols + jy] * gy[x * 3 + y];
-      
-   */
-
    float calculatedGx = 0.0f, calculatedGy = 0.0f;
    int ix_start = i - 1;
    int jy_start = j - 1;
@@ -70,18 +56,14 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
    for(int x = 0; x < 3; x++)
    {
       int ix = ix_start + x;
-      if(ix < 0) 
-         ix = 0;
-      if(ix >= nrows) 
-         ix = nrows - 1;
+      if(ix < 0) ix = 0;
+      if(ix >= nrows) ix = nrows - 1;
       
       for(int y = 0; y < 3; y++)
       {
          int jy = jy_start + y;
-         if(jy < 0) 
-            jy = 0;
-         if(jy >= ncols) 
-            jy = ncols - 1;
+         if(jy < 0) jy = 0;
+         if(jy >= ncols) jy = ncols - 1;
 
          float pixel = s[ix * ncols + jy];
          calculatedGx += pixel * gx[x * 3 + y];
@@ -115,7 +97,8 @@ do_sobel_filtering(float *in, float *out, int ncols, int nrows)
    // ADD CODE HERE: insert your code here that iterates over every (i,j) of input,  makes a call
    // to sobel_filtered_pixel, and assigns the resulting value at location (i,j) in the output.
    #pragma omp parallel for
-   for(int i = 0; i < nrows; i++){
+   for(int i = 0; i < nrows; i++)
+   {
       float* outPtr = out + i * ncols;
       for(int j = 0; j < ncols; j++){
          outPtr[j] = sobel_filtered_pixel(in, i, j, ncols, nrows, Gx, Gy);
