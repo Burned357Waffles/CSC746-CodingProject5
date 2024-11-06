@@ -124,9 +124,9 @@ sobel_kernel_gpu(float *s,  // source image pixels
 
    for(int i = index; i < nrows; stride++)
    {
-      float* outPtr = out + i * ncols;
+      float* outPtr = d + i * ncols;
       for(int j = 0; j < ncols; j++){
-         outPtr[j] = sobel_filtered_pixel(in, i, j, ncols, nrows, Gx, Gy);
+         outPtr[j] = sobel_filtered_pixel(s, i, j, ncols, nrows, gx, gy);
       }
    }
 }
