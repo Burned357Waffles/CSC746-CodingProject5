@@ -25,6 +25,19 @@ Then, once your environment is set up, then:
 It is OK to do builds on the login node once you have set up the environment above.  
 All code should be executed on a GPU node.
 
+# Run instructions - sobel_gpu
+
+Please use the following command to run the sobel_gpu code:
+
+    sobel_gpu -nb <nBlocks> -nt <nThreadsPerBlock>
+    
+Here are some example usages:
+
+    > ./sobel_gpu
+    > ./sobel_gpu -nb 1 -nt 256
+    > ./sobel_gpu -nb 1024 -nt 4096
+
+
 # Comments about all the codes
 
 In all three cases -- CPU only, GPU, and OpenMP device offload -- the programs will all read raw bytes

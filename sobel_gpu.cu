@@ -191,18 +191,35 @@ main (int ac, char *av[])
    // int nBlocks=1, nThreadsPerBlock=256;
 
    // ADD CODE HERE: insert your code here to set a different number of thread blocks or # of threads per block
-   int nBlocks = 1;
-   int nThreadsPerBlock = 256;
+   int nBlocks, nThreadsPerBlock;
 
-   if (ac != 3)
+   // set nBlocks andnThreadsPerBlock based on av
+   if (ac != 5)
    {
-      printf("Using default GPU configuration: 1 block, 256 threads per block\n");
-      printf("Usage: <output-filename> <nBlocks> <nThreadsPerBlock>\n");
+      if (strcmp(av[1], "-nb") == 0)
+      {
+         nBlocks = atoi(av[2]);
+         if (nBlocks <= 0)
+         {
+            printf("Error: Invalid number of blocks. Must be a positive integer.\n");
+            return 1;
+         }
+      }
+
+      if (strcmp(av[3], "-nt") == 0)
+      {
+         nThreadsPerBlock = atoi(av[4]);
+         if (nThreadsPerBlock <= 0)
+         {
+            printf("Error: Invalid number of threads per block. Must be a positive integer.\n");
+            return 1;
+         }
+      }
    }
    else
    {
-      nBlocks = atoi(av[1]);
-      nThreadsPerBlock = atoi(av[2]);
+      printf("Usage: sobel_gpu -nb <nBlocks> -nt <nThreadsPerBlock> \n");
+      return 1;
    }
 
 
