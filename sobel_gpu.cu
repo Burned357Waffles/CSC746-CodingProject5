@@ -194,34 +194,31 @@ main (int ac, char *av[])
    int nBlocks, nThreadsPerBlock;
 
    printf("ac: %d\n", ac);
-   printf("av length: %d\n", sizeof(av));
    // set nBlocks andnThreadsPerBlock based on av
    if (ac != 5)
    {
-      if (strcmp(av[1], "-nb") == 0)
-      {
-         nBlocks = atoi(av[2]);
-         if (nBlocks <= 0)
-         {
-            printf("Error: Invalid number of blocks. Must be a positive integer.\n");
-            return 1;
-         }
-      }
-
-      if (strcmp(av[3], "-nt") == 0)
-      {
-         nThreadsPerBlock = atoi(av[4]);
-         if (nThreadsPerBlock <= 0)
-         {
-            printf("Error: Invalid number of threads per block. Must be a positive integer.\n");
-            return 1;
-         }
-      }
-   }
-   else
-   {
       printf("Usage: sobel_gpu -nb <nBlocks> -nt <nThreadsPerBlock> \n");
       return 1;
+   }
+   
+   if (strcmp(av[1], "-nb") == 0)
+   {
+      nBlocks = atoi(av[2]);
+      if (nBlocks <= 0)
+      {
+         printf("Error: Invalid number of blocks. Must be a positive integer.\n");
+         return 1;
+      }
+   }
+
+   if (strcmp(av[3], "-nt") == 0)
+   {
+      nThreadsPerBlock = atoi(av[4]);
+      if (nThreadsPerBlock <= 0)
+      {
+         printf("Error: Invalid number of threads per block. Must be a positive integer.\n");
+         return 1;
+      }
    }
 
 
