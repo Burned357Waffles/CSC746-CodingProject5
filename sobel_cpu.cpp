@@ -90,16 +90,12 @@ do_sobel_filtering(float *in, float *out, int ncols, int nrows)
    float Gx[] = {1.0, 0.0, -1.0, 2.0, 0.0, -2.0, 1.0, 0.0, -1.0};
    float Gy[] = {1.0, 2.0, 1.0, 0.0, 0.0, 0.0, -1.0, -2.0, -1.0};
 
-   #pragma omp parallel
+   #pragma omp parallel for
+   for(int i = 0; i < nrows; i++)
    {
-      printf("Number of threads: %d\n", omp_get_num_threads());
-      #pragma omp for
-      for(int i = 0; i < nrows; i++)
-      {
-         float* outPtr = out + i * ncols;
-         for(int j = 0; j < ncols; j++)
-            outPtr[j] = sobel_filtered_pixel(in, i, j, ncols, nrows, Gx, Gy);
-      }
+      float* outPtr = out + i * ncols;
+      for(int j = 0; j < ncols; j++)
+         outPtr[j] = sobel_filtered_pixel(in, i, j, ncols, nrows, Gx, Gy);
    }
 }
 
@@ -113,7 +109,18 @@ main (int ac, char *av[])
 //   int data_dims[2] = {3556, 2573};
 //   char output_fname[] = "../data/processed-raw-int8-cpu.dat";
 
-   
+   #pragma omp parallel
+   {
+      // ID of the thread in the current team
+      int thread_id = omp_get_thread_num();
+      // Number of threads in the current team
+      int nthreads = omp_get_num_threads();
+
+      #pragma omp critical
+      {
+         std::cout << "Hello world, I'm thread " << thread_id << " out of " << nthreads << " total threads. " << std::endl; 
+      }
+   }
 
    off_t nvalues = data_dims[0]*data_dims[1];
    unsigned char *in_data_bytes = (unsigned char *)malloc(sizeof(unsigned char)*nvalues);
