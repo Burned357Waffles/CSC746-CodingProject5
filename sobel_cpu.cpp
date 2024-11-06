@@ -81,11 +81,10 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
 //  sobel_filtered_pixel() function at each (i,j) location of input to compute the
 //  sobel filtered output pixel at location (i,j) in output.
 //
-// input: float *s - the source data, size=rows*cols
+// input: float *in - the source data, size=rows*cols
 // input: int i,j - the location of the pixel in the source data where we want to center our sobel convolution
 // input: int nrows, ncols: the dimensions of the input and output image buffers
-// input: float *gx, gy:  arrays of length 9 each, these are logically 3x3 arrays of sobel filter weights
-// output: float *d - the buffer for the output, size=rows*cols.
+// output: float *out - the buffer for the output, size=rows*cols.
 //
 
 void
@@ -100,9 +99,8 @@ do_sobel_filtering(float *in, float *out, int ncols, int nrows)
    for(int i = 0; i < nrows; i++)
    {
       float* outPtr = out + i * ncols;
-      for(int j = 0; j < ncols; j++){
+      for(int j = 0; j < ncols; j++)
          outPtr[j] = sobel_filtered_pixel(in, i, j, ncols, nrows, Gx, Gy);
-      }
    }
 }
 

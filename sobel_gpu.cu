@@ -122,7 +122,7 @@ sobel_kernel_gpu(float *s,  // source image pixels
    int index = blockIdx.x * blockDim.x + threadIdx.x;
    int stride = blockDim.x * gridDim.x;
 
-   for(int i = index; i < nrows; stride++)
+   for(int i = index; i < nrows; i += stride)
    {
       float* outPtr = d + i * ncols;
       for(int j = 0; j < ncols; j++){
