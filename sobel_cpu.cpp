@@ -48,21 +48,40 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
 
    // ADD CODE HERE: add your code here for computing the sobel stencil computation at location (i,j)
    // of input s, returning a float
+
+   /*
+         int ix = i + x - 1;
+         int jy = j + y - 1;
+
+         if(ix < 0) ix = 0;
+         if(ix >= nrows) ix = nrows - 1;
+         if(jy < 0) jy = 0;
+         if(jy >= ncols) jy = ncols - 1;
+
+         calculatedGx += s[ix * ncols + jy] * gx[x * 3 + y];
+         calculatedGy += s[ix * ncols + jy] * gy[x * 3 + y];
+      
+   */
+
    float calculatedGx = 0.0f, calculatedGy = 0.0f;
    int ix_start = i - 1;
    int jy_start = j - 1;
 
    for(int x = 0; x < 3; x++)
    {
-      int ix = i + ix_start;
-      if(ix < 0) ix = 0;
-      if(ix >= nrows) ix = nrows - 1;
-
+      int ix = ix_start + x;
+      if(ix < 0) 
+         ix = 0;
+      if(ix >= nrows) 
+         ix = nrows - 1;
+      
       for(int y = 0; y < 3; y++)
       {
-         int jy = j + jy_start;
-         if(jy < 0) jy = 0;
-         if(jy >= ncols) jy = ncols - 1;
+         int jy = jy_start + y;
+         if(jy < 0) 
+            jy = 0;
+         if(jy >= ncols) 
+            jy = ncols - 1;
 
          float pixel = s[ix * ncols + jy];
          calculatedGx += pixel * gx[x * 3 + y];
