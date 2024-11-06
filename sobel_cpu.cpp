@@ -60,9 +60,9 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
          if(ix >= nrows) ix = nrows - 1;
          if(jy < 0) jy = 0;
          if(jy >= ncols) jy = ncols - 1;
-         
-         calculatedGx += s[(i + x - 1) * ncols + (j + y - 1)] * gx[x * 3 + y];
-         calculatedGy += s[(i + x - 1) * ncols + (j + y - 1)] * gy[x * 3 + y];
+
+         calculatedGx += s[ix * ncols + jy] * gx[x * 3 + y];
+         calculatedGy += s[ix * ncols + jy] * gy[x * 3 + y];
       }
    }
    t = sqrt(calculatedGx * calculatedGx + calculatedGy * calculatedGy);
