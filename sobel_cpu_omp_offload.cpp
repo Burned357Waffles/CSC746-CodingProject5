@@ -48,10 +48,30 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
 {
 
    float t=0.0;
+   float calculatedGx = 0.0, calculatedGy = 0.0;
+   
+   int ix_start = i - 1;
+   int jy_start = j - 1;
 
-   // ADD CODE HERE: add your code here for computing the sobel stencil computation at location (i,j)
-   // of input s, returning a float
+   for(int x = 0; x < 3; x++)
+   {
+      int ix = ix_start + x;
+      if(ix < 0) ix = 0;
+      if(ix >= nrows) ix = nrows - 1;
+      
+      for(int y = 0; y < 3; y++)
+      {
+         int jy = jy_start + y;
+         if(jy < 0) jy = 0;
+         if(jy >= ncols) jy = ncols - 1;
 
+         float pixel = s[ix * ncols + jy];
+         calculatedGx += pixel * gx[x * 3 + y];
+         calculatedGy += pixel * gy[x * 3 + y];
+      }
+   }
+
+   t = sqrt(calculatedGx * calculatedGx + calculatedGy * calculatedGy);
    return t;
 }
 
@@ -60,11 +80,11 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
 //  sobel_filtered_pixel() function at each (i,j) location of input to compute the
 //  sobel filtered output pixel at location (i,j) in output.
 //
-// input: float *s - the source data, size=rows*cols
+// input: float *in - the source data, size=rows*cols
 // input: int i,j - the location of the pixel in the source data where we want to center our sobel convolution
 // input: int nrows, ncols: the dimensions of the input and output image buffers
 // input: float *gx, gy:  arrays of length 9 each, these are logically 3x3 arrays of sobel filter weights
-// output: float *d - the buffer for the output, size=rows*cols.
+// output: float *out - the buffer for the output, size=rows*cols.
 //
 void
 do_sobel_filtering(float *in, float *out, int ncols, int nrows)
@@ -83,19 +103,16 @@ do_sobel_filtering(float *in, float *out, int ncols, int nrows)
 // some of the data we only need to send: in, Gx, Gy, width, height
 // some of the data we only need to retrieve: out
 
-// ADD CODE HERE: you will need to add one more item to this line to map the "out" data array such that 
-// it is returned from the the device after the computation is complete. everything else here is input.
-#pragma omp target data map(to:in[0:nvals]) map(to:width) map(to:height) map(to:Gx[0:9]) map(to:Gy[0:9]) 
+#pragma omp target data map(to:in[0:nvals]) map(to:width) map(to:height) map(to:Gx[0:9]) map(to:Gy[0:9]) map(from:out[0:nvals])
    {
-
-   // ADD CODE HERE: insert your code here that iterates over every (i,j) of input,  makes a call
-   // to sobel_filtered_pixel, and assigns the resulting value at location (i,j) in the output.
-   
-   // don't forget to include a  #pragma omp target teams parallel for around those loop(s).
-   // You may also wish to consider additional clauses that might be appropriate here to increase parallelism 
-   // if you are using nested loops.
-
-   } // pragma omp target data
+      #pragma omp target teams distribute parallel for
+      for(int i = 0; i < nrows; i++)
+      {
+         float* outPtr = out + i * ncols;
+         for(int j = 0; j < ncols; j++)
+            outPtr[j] = sobel_filtered_pixel(in, i, j, ncols, nrows, Gx, Gy);
+      }
+   }// end pragma omp target data
 }
 
 

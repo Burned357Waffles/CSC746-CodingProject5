@@ -60,11 +60,8 @@ sobel_filtered_pixel(float *s, int i, int j , int ncols, int nrows, float *gx, f
 {
 
    float t=0.0;
+   float calculatedGx = 0.0, calculatedGy = 0.0;
 
-   // ADD CODE HERE:  add your code here for computing the sobel stencil computation at location (i,j)
-   // of input s, returning a float
-
-   float calculatedGx = 0.0f, calculatedGy = 0.0f;
    int ix_start = i - 1;
    int jy_start = j - 1;
 
@@ -200,7 +197,7 @@ main (int ac, char *av[])
       printf("Usage: sobel_gpu -nb <nBlocks> -nt <nThreadsPerBlock> \n");
       return 1;
    }
-   
+
    if (strcmp(av[1], "-nb") == 0)
    {
       nBlocks = atoi(av[2]);

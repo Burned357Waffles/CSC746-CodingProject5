@@ -27,15 +27,16 @@ All code should be executed on a GPU node.
 
 # Run instructions - sobel_gpu
 
-Please use the following command to run the sobel_gpu code:
+Please use the following command to run the sobel_gpu code from the SCRATCH directory of Perlmutter while on a GPU node:
 
+    cd $SCRATCH
+    salloc -C gpu -t 15 -c 1 -G 1 -q interactive -A m3930
     sobel_gpu -nb <nBlocks> -nt <nThreadsPerBlock>
     
-Here are some example usages:
-
-    > ./sobel_gpu
-    > ./sobel_gpu -nb 1 -nt 256
-    > ./sobel_gpu -nb 1024 -nt 4096
+These arguments are required to run the code. Provided arguments must be greater than 0. Here are some example usages:
+    
+    ~> ./sobel_gpu -nb 1 -nt 256
+    ~> ./sobel_gpu -nb 1024 -nt 4096
 
 
 # Comments about all the codes
@@ -67,13 +68,13 @@ You can verify your result by displaying the image with the python script provid
 
     module load python
     python scripts/imshow.py data/zebra-gray-int8-4x 7112 5146  # display the source image
-    python scripts/imshow.py data/processed-raw-int8-4x-gpu.dat 7112 5146  # display result from your code
+    python scripts/imshow.py data/processed-raw-int8-4x-cpu.dat 7112 5146  # display result from your code
 
 This will display the results of the "correct results" of the sobel filter applied to the default input dataset, zebra-gray-int8-4x. 
 
 Note: if you're running this script from Perlmutter, please be sure that you:
 * ssh -Y user@perlmutter-p1.nersc.gov when you connect so that X connections are tunneled through ssh, and the image will actually display remotely, and
-* do a module load python    otherwise you will be accessing an outdated version of python.
+* do a module load python otherwise you will be accessing an outdated version of python.
 
 # Adding your code to the sobel_gpu.cu
 
