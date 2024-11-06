@@ -31,7 +31,7 @@ export OMP_PROC_BIND=spread
 for t in 1 2 4 8 16
    do
    export OMP_NUM_THREADS=$t
-   echo "OMP_NUM_THREASDS = " $OMP_NUM_THREADS
+   echo "OMP_NUM_THREADS = " $OMP_NUM_THREADS
    ./job-@BENCHMARK@
    echo "Finished job-@BENCHMARK@ with $OMP_NUM_THREADS threads"
 #   srun -n 1  ./benchmark-@BENCHMARK@  # fall 2023, don't use srun to launch non-MPI jobs
