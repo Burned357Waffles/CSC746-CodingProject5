@@ -11,6 +11,8 @@ set(CMAKE_BUILD_TYPE "Release")
 add_executable(sobel_cpu sobel_cpu.cpp)
 target_compile_options(sobel_cpu PRIVATE -fopenmp -fast)
 target_link_options(sobel_cpu PRIVATE -fopenmp)
+set(BENCHMARK "sobel_cpu")
+configure_file(job.in job-${BENCHMARK})
 
 add_executable(sobel_cpu_omp_offload sobel_cpu_omp_offload.cpp)
 target_compile_options(sobel_cpu_omp_offload PRIVATE -fast -mp=gpu -Minfo=mp,accel )
