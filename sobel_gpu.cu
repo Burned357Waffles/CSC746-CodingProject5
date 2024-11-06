@@ -193,6 +193,8 @@ main (int ac, char *av[])
    // ADD CODE HERE: insert your code here to set a different number of thread blocks or # of threads per block
    int nBlocks, nThreadsPerBlock;
 
+   printf("ac: %d\n", ac);
+   printf("av length: %d\n", sizeof(av));
    // set nBlocks andnThreadsPerBlock based on av
    if (ac != 5)
    {
